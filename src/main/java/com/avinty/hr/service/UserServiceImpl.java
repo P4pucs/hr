@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUserById(Long id) {
-
         boolean exits = userRepository.findById(id).isPresent();
 
         if (!exits) {
@@ -40,13 +39,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> getUsersByName(String fullName) {
-        List<User> users = userRepository.findByName(fullName);
-
-        if (users.size() == 0) {
-            throw new ResourceNotFoundException("NULL " + fullName);
-        }
-
-        return users;
+        return userRepository.findByName(fullName);
     }
 
     @Override

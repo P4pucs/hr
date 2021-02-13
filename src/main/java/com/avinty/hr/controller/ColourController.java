@@ -1,0 +1,40 @@
+package com.avinty.hr.controller;
+
+import com.avinty.hr.model.Colour;
+import com.avinty.hr.service.ColourService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping(path = "colours")
+public class ColourController {
+
+    private final ColourService colourService;
+
+    @GetMapping()
+    public ResponseEntity<List<Colour>> getAllColours() {
+        return ResponseEntity.status(HttpStatus.OK).body(colourService.getAllColours());
+    }
+
+    @PostMapping
+    public ResponseEntity<Colour> createColour(@RequestBody Colour colour) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(colourService.createColour(colour));
+    }
+
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<Void> deleteColourById(@PathVariable Long id) {
+        colourService.deleteColourById(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping()
+    public ResponseEntity<Colour> updateColour(@RequestBody Colour colour) {
+        return ResponseEntity.status(HttpStatus.OK).body(colourService.updateColour(colour));
+    }
+}

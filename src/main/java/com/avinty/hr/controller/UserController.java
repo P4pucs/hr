@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsersByName(@RequestParam(value = "name", required = false) String name) {
+    public ResponseEntity<List<User>> getUsers(@RequestParam(value = "name", required = false) String name) {
         if (name != null) {
             return ResponseEntity.status(HttpStatus.OK).body(userService.getUsersByName(name));
         } else {

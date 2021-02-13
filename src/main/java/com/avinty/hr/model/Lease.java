@@ -25,9 +25,9 @@ public class Lease extends BaseEntity {
     private User user;
 
     //vehicle_id
-    @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
+    @JoinColumn(name = "car_id", referencedColumnName = "id")
     @ManyToOne
-    private Vehicle vehicle;
+    private Car car;
 
     //start_city
     @JoinColumn(name = "start_city", referencedColumnName = "id")
