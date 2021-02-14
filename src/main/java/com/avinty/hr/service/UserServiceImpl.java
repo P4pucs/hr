@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> getAllUsersCount() {
-        return null;
+        return userRepository.findAllUsers();
     }
 
     @Override

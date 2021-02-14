@@ -11,10 +11,8 @@ import com.avinty.hr.repository.LeaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.transaction.Transactional;
-import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 

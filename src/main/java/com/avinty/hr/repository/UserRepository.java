@@ -2,7 +2,9 @@ package com.avinty.hr.repository;
 
 import com.avinty.hr.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
@@ -18,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "ORDER BY u.fullName ASC")
     List<User> findByName(@Param("fullName") String fullName);
 
+    @Async
+    @Query(value = "{CALL getAllUsers()}", nativeQuery = true)
+    List<User> findAllUsers();
 }

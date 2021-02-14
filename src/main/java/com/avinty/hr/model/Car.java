@@ -15,21 +15,17 @@ import javax.persistence.*;
 @Table(name = "car")
 public class Car extends BaseEntity {
 
-    @NonNull
     @Column(name = "license_plate")
     private String licencePlate;
 
-    @NonNull
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     @ManyToOne
     private Brand brand;
 
-    @NonNull
     @JoinColumn(name = "colour_id", referencedColumnName = "id")
     @ManyToOne
     private Colour colour;
 
-    @NonNull
     @Enumerated(EnumType.STRING)
     private Category category;
 

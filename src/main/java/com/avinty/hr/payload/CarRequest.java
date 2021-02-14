@@ -8,9 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-@Getter
 @Data
-@NoArgsConstructor
+@Getter
 public class CarRequest {
     @NonNull
     private String licencePlate;
