@@ -39,12 +39,13 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     @Transactional
-    public Brand updateBrand(Brand brand) {
-        if(brand.getId() == null || !brandRepository.existsById(brand.getId())) {
-            throw new ResourceNotFoundException(brand.getId() == null ? "NULL" : brand.getId().toString());
-        }
+    public Brand updateBrand(Long id, NameRequest request) {
+        return brandRepository.findById(id).map(brand -> {
 
-        return brandRepository.save(brand);
+            brand.setName(request.getName());
+
+            return brandRepository.save(brand);
+        }).orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
     }
 
 }

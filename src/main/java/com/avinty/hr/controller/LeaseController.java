@@ -1,7 +1,9 @@
 package com.avinty.hr.controller;
 
 import com.avinty.hr.model.Lease;
+import com.avinty.hr.payload.ActiveRequest;
 import com.avinty.hr.payload.LeaseRequest;
+import com.avinty.hr.payload.SumResponse;
 import com.avinty.hr.service.LeaseService;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
@@ -19,12 +21,8 @@ public class LeaseController {
     private final LeaseService leaseService;
 
     @GetMapping()
-    public ResponseEntity<Object> getLeasesSum() {
-        JSONObject response = new JSONObject();
-
-        response.appendField("SUM", leaseService.getLeasesSum().toString());
-
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    public ResponseEntity<SumResponse> getLeasesSum() {
+        return ResponseEntity.status(HttpStatus.OK).body(leaseService.getLeasesSum());
     }
 
     @GetMapping(path = "current/{id}")
@@ -42,8 +40,8 @@ public class LeaseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(leaseService.createLease(request));
     }
 
-    @PatchMapping(path = "{id}")
-    public ResponseEntity<Lease> closeLeaseById(@PathVariable Long id, @RequestBody Lease request) {
+    @PatchMapping(path = "close/{id}")
+    public ResponseEntity<Lease> closeLeaseById(@PathVariable Long id, @RequestBody ActiveRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(leaseService.closeLeaseById(id, request));
     }
 }

@@ -53,10 +53,15 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public Car updateCarById(Long id, Car updatedCar) {
-        carRepository.findById(id)
-                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
+    public Car updateCarById(Long id, CarRequest request) {
+        return carRepository.findById(id).map(car -> {
 
-        return carRepository.save(updatedCar);
+            car.setLicencePlate(request.getLicencePlate());
+            car.setBrand(request.getBrand());
+            car.setColour(request.getColour());
+            car.setCategory(request.getCategory());
+
+            return carRepository.save(car);
+        }).orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
     }
 }

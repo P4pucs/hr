@@ -12,5 +12,5 @@ public interface ColourService {
 
     void deleteColourById(Long id);
 
-    Colour updateColour(Colour colour);
+    Colour updateColour(Long id, NameRequest request);
 }

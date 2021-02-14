@@ -1,12 +1,12 @@
 package com.avinty.hr.payload;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class SumResponse {
     @NonNull
-    private Integer sum;
+    private Long sum;
 }

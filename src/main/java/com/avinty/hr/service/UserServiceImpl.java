@@ -55,10 +55,15 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public User updateUserById(Long id, User updatedUser) {
-        userRepository.findById(id)
-                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
+    public User updateUserById(Long id, UserRequest request) {
+        return userRepository.findById(id).map(user -> {
 
-        return userRepository.save(updatedUser);
+            user.setFullName(request.getFullName());
+            user.setPhoneNumber(request.getPhoneNumber());
+            user.setEmail(request.getEmail());
+
+            return userRepository.save(user);
+        }).orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
+
     }
 }

@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @PutMapping(path = "{id}")
-    public ResponseEntity<User> updateUserById(@PathVariable Long id, @RequestBody User updatedUser) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(id, updatedUser));
+    public ResponseEntity<User> updateUserById(@PathVariable Long id, @RequestBody UserRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(id, request));
     }
 }

@@ -5,10 +5,12 @@ import com.avinty.hr.model.Colour;
 import com.avinty.hr.model.enums.Category;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Getter
 @Data
+@NoArgsConstructor
 public class CarRequest {
     @NonNull
     private String licencePlate;

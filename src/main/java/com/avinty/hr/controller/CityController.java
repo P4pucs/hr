@@ -34,8 +34,8 @@ public class CityController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping()
-    public ResponseEntity<City> updateCity(@RequestBody City city) {
-        return ResponseEntity.status(HttpStatus.OK).body(cityService.updateCity(city));
+    @PutMapping(path = "{id}")
+    public ResponseEntity<City> updateCity(@PathVariable Long id, @RequestBody NameRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(cityService.updateCity(id, request));
     }
 }

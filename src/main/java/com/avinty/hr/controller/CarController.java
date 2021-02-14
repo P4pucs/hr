@@ -44,7 +44,7 @@ public class CarController {
     }
 
     @PutMapping(path = "{id}")
-    public ResponseEntity<Car> updateCarById(@PathVariable Long id, @RequestBody Car updatedCar) {
-        return ResponseEntity.status(HttpStatus.OK).body(carService.updateCarById(id, updatedCar));
+    public ResponseEntity<Car> updateCarById(@PathVariable Long id, @RequestBody CarRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(carService.updateCarById(id, request));
     }
 }

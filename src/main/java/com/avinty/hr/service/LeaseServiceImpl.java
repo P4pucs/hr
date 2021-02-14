@@ -3,7 +3,9 @@ package com.avinty.hr.service;
 import com.avinty.hr.exception.CarActiveException;
 import com.avinty.hr.exception.LeaseClosedException;
 import com.avinty.hr.model.Lease;
+import com.avinty.hr.payload.ActiveRequest;
 import com.avinty.hr.payload.LeaseRequest;
+import com.avinty.hr.payload.SumResponse;
 import com.avinty.hr.repository.LeaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -20,8 +22,8 @@ public class LeaseServiceImpl implements LeaseService {
     private final LeaseRepository leaseRepository;
 
     @Override
-    public Long getLeasesSum() {
-        return leaseRepository.count();
+    public SumResponse getLeasesSum() {
+        return new SumResponse(leaseRepository.count());
     }
 
     @Override
@@ -56,7 +58,7 @@ public class LeaseServiceImpl implements LeaseService {
 
     @Override
     @Transactional
-    public Lease closeLeaseById(Long id, Lease request) {
+    public Lease closeLeaseById(Long id, ActiveRequest request) {
         Lease lease = leaseRepository.findById(id)
                 .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
 

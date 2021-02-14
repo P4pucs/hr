@@ -35,8 +35,8 @@ public class ColourController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping()
-    public ResponseEntity<Colour> updateColour(@RequestBody Colour colour) {
-        return ResponseEntity.status(HttpStatus.OK).body(colourService.updateColour(colour));
+    @PutMapping(path = "{id}")
+    public ResponseEntity<Colour> updateColour(@PathVariable Long id, @RequestBody NameRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(colourService.updateColour(id, request));
     }
 }

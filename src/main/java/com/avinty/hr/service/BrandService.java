@@ -12,5 +12,5 @@ public interface BrandService {
 
     void deleteBrandById(Long id);
 
-    Brand updateBrand(Brand brand);
+    Brand updateBrand(Long id, NameRequest request);
 }

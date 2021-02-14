@@ -39,11 +39,12 @@ public class CityServiceImpl implements CityService {
 
     @Override
     @Transactional
-    public City updateCity(City city) {
-        if(city.getId() == null || !cityRepository.existsById(city.getId())) {
-            throw new ResourceNotFoundException(city.getId() == null ? "NULL" : city.getId().toString());
-        }
+    public City updateCity(Long id, NameRequest request) {
+        return cityRepository.findById(id).map(city -> {
 
-        return cityRepository.save(city);
+            city.setName(request.getName());
+
+            return cityRepository.save(city);
+        }).orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
     }
 }

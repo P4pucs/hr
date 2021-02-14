@@ -21,7 +21,6 @@ public class ColourServiceImpl implements ColourService {
         return colourRepository.findAll();
     }
 
-
     @Override
     @Transactional
     public Colour createColour(NameRequest request) {
@@ -40,11 +39,13 @@ public class ColourServiceImpl implements ColourService {
 
     @Override
     @Transactional
-    public Colour updateColour(Colour colour) {
-        if(colour.getId() == null || !colourRepository.existsById(colour.getId())) {
-            throw new ResourceNotFoundException(colour.getId() == null ? "NULL" : colour.getId().toString());
-        }
+    public Colour updateColour(Long id, NameRequest request) {
+        return colourRepository.findById(id).map(update -> {
 
-        return colourRepository.save(colour);
+            update.setName(request.getName());
+
+            return colourRepository.save(update);
+        }).orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
+
     }
 }

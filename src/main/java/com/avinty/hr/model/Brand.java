@@ -1,7 +1,6 @@
 package com.avinty.hr.model;
 
 import com.avinty.hr.model.base.NameBaseEntity;
-import lombok.NonNull;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

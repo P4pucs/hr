@@ -34,9 +34,9 @@ public class BrandController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping
-    public ResponseEntity<Brand> updateBrand(@RequestBody Brand brand) {
-        return ResponseEntity.status(HttpStatus.OK).body(brandService.updateBrand(brand));
+    @PutMapping(path = "{id}")
+    public ResponseEntity<Brand> updateBrand(@PathVariable Long id, @RequestBody NameRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(brandService.updateBrand(id, request));
     }
 
 }
