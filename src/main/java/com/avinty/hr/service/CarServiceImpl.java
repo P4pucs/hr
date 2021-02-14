@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -36,6 +37,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public Car createCar(Car newCar) {
         return carRepository.save(newCar);
     }
@@ -52,6 +54,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public Car updateCarById(Long id, Car updatedCar) {
         boolean exits = carRepository.findById(id).isPresent();
 

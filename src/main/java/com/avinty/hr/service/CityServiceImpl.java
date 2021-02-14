@@ -20,8 +20,8 @@ public class CityServiceImpl implements CityService {
         return cityRepository.findAll();
     }
 
-    @Transactional
     @Override
+    @Transactional
     public City createCity(City city) {
         return cityRepository.save(city);
     }
@@ -37,8 +37,8 @@ public class CityServiceImpl implements CityService {
         cityRepository.deleteById(id);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public City updateCity(City city) {
         if(city.getId() == null || !cityRepository.existsById(city.getId())) {
             throw new ResourceNotFoundException(city.getId() == null ? "NULL" : city.getId().toString());

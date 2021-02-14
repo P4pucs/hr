@@ -20,8 +20,8 @@ public class BrandServiceImpl implements BrandService {
         return brandRepository.findAll();
     }
 
-    @Transactional
     @Override
+    @Transactional
     public Brand createBrand(Brand brand) {
         return brandRepository.save(brand);
     }
@@ -37,8 +37,8 @@ public class BrandServiceImpl implements BrandService {
         brandRepository.deleteById(id);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public Brand updateBrand(Brand brand) {
         if(brand.getId() == null || !brandRepository.existsById(brand.getId())) {
             throw new ResourceNotFoundException(brand.getId() == null ? "NULL" : brand.getId().toString());

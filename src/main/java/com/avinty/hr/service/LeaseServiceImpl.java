@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class LeaseServiceImpl implements LeaseService {
     }
 
     @Override
+    @Transactional
     public Lease createLease(Lease lease) {
         int size = leaseRepository.getActiveCarIdById(lease.getCar().getId()).size();
 
@@ -48,6 +50,7 @@ public class LeaseServiceImpl implements LeaseService {
     }
 
     @Override
+    @Transactional
     public Lease closeLeaseById(Long id, Lease request) {
         boolean exists = leaseRepository.findById(id).isPresent();
 
@@ -56,7 +59,12 @@ public class LeaseServiceImpl implements LeaseService {
         }
 
         Lease lease = leaseRepository.findById(id).get();
-        lease.setActive(request.isActive());
+
+        if (lease.isActive()) {
+            lease.setActive(request.isActive());
+        } else {
+            throw new ResourceNotFoundException("lease " + lease.getId() + " already closed");
+        }
         lease.setEndDate(LocalDateTime.now());
 
         return leaseRepository.save(lease);

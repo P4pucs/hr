@@ -20,8 +20,9 @@ public class ColourServiceImpl implements ColourService {
         return colourRepository.findAll();
     }
 
-    @Transactional
+
     @Override
+    @Transactional
     public Colour createColour(Colour colour) {
         return colourRepository.save(colour);
     }
@@ -38,6 +39,7 @@ public class ColourServiceImpl implements ColourService {
     }
 
     @Override
+    @Transactional
     public Colour updateColour(Colour colour) {
         if(colour.getId() == null || !colourRepository.existsById(colour.getId())) {
             throw new ResourceNotFoundException(colour.getId() == null ? "NULL" : colour.getId().toString());
