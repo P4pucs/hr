@@ -1,5 +1,6 @@
 package com.avinty.hr.service;
 
+import com.avinty.hr.exception.BadValueException;
 import com.avinty.hr.exception.CarActiveException;
 import com.avinty.hr.exception.LeaseClosedException;
 import com.avinty.hr.model.Lease;
@@ -10,8 +11,10 @@ import com.avinty.hr.repository.LeaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.transaction.Transactional;
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -59,6 +62,10 @@ public class LeaseServiceImpl implements LeaseService {
     @Override
     @Transactional
     public Lease closeLeaseById(Long id, ActiveRequest request) {
+        if (request.isActive()) {
+            throw new BadValueException("Cannot send true");
+        }
+
         Lease lease = leaseRepository.findById(id)
                 .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
 
