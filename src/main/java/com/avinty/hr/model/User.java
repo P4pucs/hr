@@ -7,13 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@NonNull
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "users") //can not be named "user" due to postgres reserved it
+@Table(name = "users") //cannot be named "user" due to postgres reserved it
 public class User extends BaseEntity {
 
     @Column(name = "full_name")

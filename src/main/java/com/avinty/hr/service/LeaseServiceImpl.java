@@ -3,6 +3,7 @@ package com.avinty.hr.service;
 import com.avinty.hr.exception.CarActiveException;
 import com.avinty.hr.exception.LeaseClosedException;
 import com.avinty.hr.model.Lease;
+import com.avinty.hr.payload.LeaseRequest;
 import com.avinty.hr.repository.LeaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -24,8 +25,8 @@ public class LeaseServiceImpl implements LeaseService {
     }
 
     @Override
-    public Lease getCurrentLeaseOfId(Long id) {
-        return leaseRepository.getActiveLeaseOfId(id);
+    public List<Lease> getCurrentLeaseOfId(Long id) {
+        return leaseRepository.getActiveLeasesOfId(id);
     }
 
     @Override
@@ -41,12 +42,14 @@ public class LeaseServiceImpl implements LeaseService {
 
     @Override
     @Transactional
-    public Lease createLease(Lease lease) {
-        int size = leaseRepository.getActiveCarIdById(lease.getCar().getId()).size();
+    public Lease createLease(LeaseRequest request) {
+        int size = leaseRepository.getActiveCarIdById(request.getCar().getId()).size();
 
         if (size != 0) {
-            throw new CarActiveException("car " + lease.getCar().getId().toString() + " is active");
+            throw new CarActiveException("car " + request.getCar().getId().toString() + " is active");
         }
+
+        Lease lease = new Lease(request.getUser(), request.getCar(), request.getStartCity(), request.getEndCity());
 
         return leaseRepository.save(lease);
     }
@@ -54,13 +57,8 @@ public class LeaseServiceImpl implements LeaseService {
     @Override
     @Transactional
     public Lease closeLeaseById(Long id, Lease request) {
-        boolean exists = leaseRepository.findById(id).isPresent();
-
-        if (!exists) {
-            throw new ResourceNotFoundException("NULL " + id.toString());
-        }
-
-        Lease lease = leaseRepository.findById(id).get();
+        Lease lease = leaseRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
 
         if (!lease.isActive()) {
             throw new LeaseClosedException("lease " + lease.getId() + " already closed");

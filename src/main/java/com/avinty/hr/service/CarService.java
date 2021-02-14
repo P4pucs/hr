@@ -1,6 +1,7 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.model.Car;
+import com.avinty.hr.payload.CarRequest;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface CarService {
 
     List<Car> getAllCars();
 
-    Car createCar(Car newCar);
+    Car createCar(CarRequest request);
 
     void deleteCarById(Long id);
 

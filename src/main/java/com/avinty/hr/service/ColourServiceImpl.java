@@ -1,6 +1,7 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.model.Colour;
+import com.avinty.hr.payload.NameRequest;
 import com.avinty.hr.repository.ColourRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -23,17 +24,16 @@ public class ColourServiceImpl implements ColourService {
 
     @Override
     @Transactional
-    public Colour createColour(Colour colour) {
+    public Colour createColour(NameRequest request) {
+        Colour colour = new Colour(request.getName());
+
         return colourRepository.save(colour);
     }
 
     @Override
     public void deleteColourById(Long id) {
-        boolean exists = colourRepository.findById(id).isPresent();
-
-        if (!exists) {
-            throw new ResourceNotFoundException("NULL " + id.toString());
-        }
+        colourRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
 
         colourRepository.deleteById(id);
     }

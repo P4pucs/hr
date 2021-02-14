@@ -1,7 +1,9 @@
 package com.avinty.hr.controller;
 
 import com.avinty.hr.model.Colour;
+import com.avinty.hr.payload.NameRequest;
 import com.avinty.hr.service.ColourService;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +24,8 @@ public class ColourController {
     }
 
     @PostMapping
-    public ResponseEntity<Colour> createColour(@RequestBody Colour colour) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(colourService.createColour(colour));
+    public ResponseEntity<Colour> createColour(@RequestBody NameRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(colourService.createColour(request));
     }
 
     @DeleteMapping(path = "{id}")

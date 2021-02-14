@@ -1,13 +1,14 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.model.User;
+import com.avinty.hr.payload.UserRequest;
 
 import java.util.List;
 
 public interface UserService {
     List<User> getAllUsers();
 
-    User createUser(User newUser);
+    User createUser(UserRequest request);
 
     User getUserById(Long id);
 
@@ -16,4 +17,6 @@ public interface UserService {
     User updateUserById(Long id, User updatedUser);
 
     List<User> getUsersByName(String fullName);
+
+    List<User> getAllUsersCount();
 }

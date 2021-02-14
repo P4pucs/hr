@@ -1,6 +1,7 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.model.Brand;
+import com.avinty.hr.payload.NameRequest;
 import com.avinty.hr.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -22,17 +23,16 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     @Transactional
-    public Brand createBrand(Brand brand) {
+    public Brand createBrand(NameRequest request) {
+        Brand brand = new Brand(request.getName());
+
         return brandRepository.save(brand);
     }
 
     @Override
     public void deleteBrandById(Long id) {
-        boolean exists = brandRepository.findById(id).isPresent();
-
-        if (!exists) {
-            throw new ResourceNotFoundException("NULL " + id.toString());
-        }
+        brandRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
 
         brandRepository.deleteById(id);
     }

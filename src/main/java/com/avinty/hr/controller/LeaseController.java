@@ -1,6 +1,7 @@
 package com.avinty.hr.controller;
 
 import com.avinty.hr.model.Lease;
+import com.avinty.hr.payload.LeaseRequest;
 import com.avinty.hr.service.LeaseService;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
@@ -27,7 +28,7 @@ public class LeaseController {
     }
 
     @GetMapping(path = "current/{id}")
-    public ResponseEntity<Lease> getCurrentLeaseOfId(@PathVariable Long id) {
+    public ResponseEntity<List<Lease>> getCurrentLeasesOfId(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(leaseService.getCurrentLeaseOfId(id));
     }
 
@@ -37,8 +38,8 @@ public class LeaseController {
     }
 
     @PostMapping()
-    public ResponseEntity<Lease> createLease(@RequestBody Lease lease) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(leaseService.createLease(lease));
+    public ResponseEntity<Lease> createLease(@RequestBody LeaseRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(leaseService.createLease(request));
     }
 
     @PatchMapping(path = "{id}")

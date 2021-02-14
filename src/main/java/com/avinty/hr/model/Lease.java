@@ -16,22 +16,18 @@ import java.time.LocalDateTime;
 @Table(name = "lease")
 public class Lease extends BaseEntity {
 
-    @NonNull
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User user;
 
-    @NonNull
     @JoinColumn(name = "car_id", referencedColumnName = "id")
     @ManyToOne
     private Car car;
 
-    @NonNull
     @JoinColumn(name = "start_city", referencedColumnName = "id")
     @ManyToOne
     private City startCity;
 
-    @NonNull
     @JoinColumn(name = "end_city", referencedColumnName = "id")
     @ManyToOne
     private City endCity;

@@ -1,14 +1,15 @@
 package com.avinty.hr.controller;
 
 import com.avinty.hr.model.User;
+import com.avinty.hr.payload.UserRequest;
 import com.avinty.hr.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -31,9 +32,14 @@ public class UserController {
         }
     }
 
+    @GetMapping(path = "getAllCount")
+    public ResponseEntity<List<User>> getAllUsersCount() {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsersCount());
+    }
+
     @PostMapping
-    public ResponseEntity<User> createUser(@Validated @RequestBody User newUser) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(newUser));
+    public ResponseEntity<User> createUser(@RequestBody UserRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(request));
     }
 
     @DeleteMapping(path = "{id}")

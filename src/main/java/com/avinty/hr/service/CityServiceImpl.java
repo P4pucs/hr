@@ -1,6 +1,7 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.model.City;
+import com.avinty.hr.payload.NameRequest;
 import com.avinty.hr.repository.CityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -22,17 +23,16 @@ public class CityServiceImpl implements CityService {
 
     @Override
     @Transactional
-    public City createCity(City city) {
+    public City createCity(NameRequest nameRequest) {
+        City city = new City(nameRequest.getName());
+
         return cityRepository.save(city);
     }
 
     @Override
     public void deleteCityById(Long id) {
-        boolean exists = cityRepository.findById(id).isPresent();
-
-        if (!exists) {
-            throw new ResourceNotFoundException("NULL " + id.toString());
-        }
+        cityRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
 
         cityRepository.deleteById(id);
     }

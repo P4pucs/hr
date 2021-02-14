@@ -1,11 +1,11 @@
 package com.avinty.hr.controller;
 
 import com.avinty.hr.model.Car;
+import com.avinty.hr.payload.CarRequest;
 import com.avinty.hr.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +33,8 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<Car> createCar(@RequestBody Car newCar) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(carService.createCar(newCar));
+    public ResponseEntity<Car> createCar(@RequestBody CarRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(carService.createCar(request));
     }
 
     @DeleteMapping(path = "{id}")

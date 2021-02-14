@@ -16,7 +16,7 @@ public interface LeaseRepository extends JpaRepository<Lease, Long> {
     @Query(value = "SELECT l FROM Lease l " +
             "WHERE l.user.id = :id " +
             "AND l.active = true")
-    Lease getActiveLeaseOfId(@Param("id") Long id);
+    List<Lease> getActiveLeasesOfId(@Param("id") Long id);
 
     @Async
     @Query(value = "SELECT l FROM Lease l " +

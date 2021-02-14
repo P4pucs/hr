@@ -1,6 +1,7 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.model.User;
+import com.avinty.hr.payload.UserRequest;
 import com.avinty.hr.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -22,8 +23,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public User createUser(User newUser) {
-        return userRepository.save(newUser);
+    public User createUser(UserRequest request) {
+        User user = new User(request.getFullName(), request.getPhoneNumber(), request.getEmail());
+
+        return userRepository.save(user);
     }
 
     @Override
@@ -38,13 +41,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public List<User> getAllUsersCount() {
+        return null;
+    }
+
+    @Override
     public void deleteUserById(Long id) {
-
-        boolean exits = userRepository.findById(id).isPresent();
-
-        if (!exits) {
-            throw new ResourceNotFoundException("NULL " + id.toString());
-        }
+        userRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
 
         userRepository.deleteById(id);
     }
@@ -52,13 +56,8 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public User updateUserById(Long id, User updatedUser) {
-        boolean exits = userRepository.findById(id).isPresent();
-
-        if (!exits) {
-            throw new ResourceNotFoundException("NULL " + id.toString());
-        }
-
-        updatedUser.setId(id); // I know the request body contains the id, but the path variable id would be unused
+        userRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
 
         return userRepository.save(updatedUser);
     }

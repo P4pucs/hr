@@ -1,6 +1,7 @@
 package com.avinty.hr.controller;
 
 import com.avinty.hr.model.Brand;
+import com.avinty.hr.payload.NameRequest;
 import com.avinty.hr.service.BrandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,8 @@ public class BrandController {
     }
 
     @PostMapping
-    public ResponseEntity<Brand> createBrand(@RequestBody Brand brand) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(brandService.createBrand(brand));
+    public ResponseEntity<Brand> createBrand(@RequestBody NameRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(brandService.createBrand(request));
     }
 
     @DeleteMapping(path = "{id}")

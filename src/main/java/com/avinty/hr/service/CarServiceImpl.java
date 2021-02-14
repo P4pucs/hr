@@ -1,6 +1,7 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.model.Car;
+import com.avinty.hr.payload.CarRequest;
 import com.avinty.hr.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -33,17 +34,19 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public Car createCar(Car newCar) {
-        return carRepository.save(newCar);
+    public Car createCar(CarRequest request) {
+        Car car = new Car(request.getLicencePlate(),
+                request.getBrand(),
+                request.getColour(),
+                request.getCategory());
+
+        return carRepository.save(car);
     }
 
     @Override
     public void deleteCarById(Long id) {
-        boolean exits = carRepository.findById(id).isPresent();
-
-        if (!exits) {
-            throw new ResourceNotFoundException("NULL " + id.toString());
-        }
+        carRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
 
         carRepository.deleteById(id);
     }
@@ -51,13 +54,8 @@ public class CarServiceImpl implements CarService {
     @Override
     @Transactional
     public Car updateCarById(Long id, Car updatedCar) {
-        boolean exits = carRepository.findById(id).isPresent();
-
-        if (!exits) {
-            throw new ResourceNotFoundException("NULL " + id.toString());
-        }
-
-        updatedCar.setId(id); // I know the request body contains the id, but the path variable id would be unused
+        carRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()));
 
         return carRepository.save(updatedCar);
     }

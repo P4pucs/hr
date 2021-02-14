@@ -1,6 +1,7 @@
 package com.avinty.hr.controller;
 
 import com.avinty.hr.model.City;
+import com.avinty.hr.payload.NameRequest;
 import com.avinty.hr.service.CityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class CityController {
     }
 
     @PostMapping
-    public ResponseEntity<City> createCity(@RequestBody City city) {
+    public ResponseEntity<City> createCity(@RequestBody NameRequest city) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cityService.createCity(city));
     }
 
