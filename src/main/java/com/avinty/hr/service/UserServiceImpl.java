@@ -28,13 +28,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUserById(Long id) {
-        boolean exits = userRepository.findById(id).isPresent();
-
-        if (!exits) {
-            throw new ResourceNotFoundException("NULL " + id.toString());
-        }
-
-        return userRepository.findById(id).get();
+        return userRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()) );
     }
 
     @Override

@@ -17,13 +17,8 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car getCarById(Long id) {
-        boolean exits = carRepository.findById(id).isPresent();
-
-        if (!exits) {
-            throw new ResourceNotFoundException("NULL " + id.toString());
-        }
-
-        return carRepository.findById(id).get();
+        return carRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("NULL " + id.toString()) );
     }
 
     @Override

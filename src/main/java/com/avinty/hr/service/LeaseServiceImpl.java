@@ -1,5 +1,7 @@
 package com.avinty.hr.service;
 
+import com.avinty.hr.exception.CarActiveException;
+import com.avinty.hr.exception.LeaseClosedException;
 import com.avinty.hr.model.Lease;
 import com.avinty.hr.repository.LeaseRepository;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +45,7 @@ public class LeaseServiceImpl implements LeaseService {
         int size = leaseRepository.getActiveCarIdById(lease.getCar().getId()).size();
 
         if (size != 0) {
-            throw new ResourceNotFoundException("car " + lease.getCar().getId().toString() + " is active");
+            throw new CarActiveException("car " + lease.getCar().getId().toString() + " is active");
         }
 
         return leaseRepository.save(lease);
@@ -60,11 +62,11 @@ public class LeaseServiceImpl implements LeaseService {
 
         Lease lease = leaseRepository.findById(id).get();
 
-        if (lease.isActive()) {
-            lease.setActive(request.isActive());
-        } else {
-            throw new ResourceNotFoundException("lease " + lease.getId() + " already closed");
+        if (!lease.isActive()) {
+            throw new LeaseClosedException("lease " + lease.getId() + " already closed");
         }
+
+        lease.setActive(request.isActive());
         lease.setEndDate(LocalDateTime.now());
 
         return leaseRepository.save(lease);
