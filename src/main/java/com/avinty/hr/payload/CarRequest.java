@@ -5,7 +5,6 @@ import com.avinty.hr.model.Colour;
 import com.avinty.hr.model.enums.Category;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Data

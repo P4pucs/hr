@@ -5,12 +5,10 @@ import com.avinty.hr.model.City;
 import com.avinty.hr.model.User;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Data
 @Getter
-@NoArgsConstructor
 public class LeaseRequest {
     @NonNull
     private User user;
